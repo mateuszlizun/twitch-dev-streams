@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.core.cache import cache
 from django.shortcuts import render
 
 
 def index(request):
-    return render(request, "streams/index.html")
+    currentDate = cache.get("current_date", "current date not available")
+    return render(request, "streams/index.html", {"current_date": currentDate})
