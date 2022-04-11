@@ -135,3 +135,10 @@ CACHES = {
         "LOCATION": "cache",
     }
 }
+
+CELERY_BEAT_SCHEDULE = {
+    "current_date_task": {
+        "task": "streams.tasks.current_date",
+        "schedule": 10.0,
+    }
+}
