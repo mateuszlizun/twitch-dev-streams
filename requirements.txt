@@ -1,5 +1,7 @@
+aioredis==1.3.1
 amqp==5.1.0
 asgiref==3.5.0
+async-timeout==4.0.2
 attrs==21.4.0
 autobahn==22.3.2
 Automat==20.2.0
@@ -7,6 +9,7 @@ billiard==3.6.4.0
 celery==5.2.6
 cffi==1.15.0
 channels==3.0.4
+channels-redis==3.4.0
 click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
@@ -17,10 +20,12 @@ Django==4.0.3
 django-celery-beat==2.2.1
 django-celery-results==2.3.0
 django-timezone-field==4.2.3
+hiredis==2.0.0
 hyperlink==21.0.0
 idna==3.3
 incremental==21.3.0
 kombu==5.2.4
+msgpack==1.0.3
 prompt-toolkit==3.0.29
 psycopg2==2.9.3
 pyasn1==0.4.8
