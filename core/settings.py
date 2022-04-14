@@ -127,6 +127,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Celery
+
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "default"
 
@@ -143,3 +145,7 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 10.0,
     }
 }
+
+# Channels
+
+ASGI_APPLICATION = "core.asgi.application"
