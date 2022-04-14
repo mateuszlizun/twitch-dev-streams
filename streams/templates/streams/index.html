@@ -1,5 +1,8 @@
 {% extends "streams/base.html" %}
+{% load static %}
 {% block content %}
     <h1>Twitch Dev Streams</h1>
-    {{ current_date }}
+    <div id="current_date">{{ current_date }}</div>
+
+    <script src="{% static 'streams/js/current_date_ws.js' %}"></script>
 {% endblock content %}
