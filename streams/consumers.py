@@ -3,10 +3,10 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 
-class CurrentDateConsumer(WebsocketConsumer):
+class StreamsConsumer(WebsocketConsumer):
     def connect(self):
-        self.room_name = "current_date"
-        self.room_group_name = "current_date_group"
+        self.room_name = "streams"
+        self.room_group_name = "streams_group"
 
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
@@ -21,6 +21,6 @@ class CurrentDateConsumer(WebsocketConsumer):
             self.channel_name,
         )
 
-    def date_message(self, event):
+    def streams_list(self, event):
         message = event["message"]
-        self.send(text_data=json.dumps({"type": "current_date", "message": message}))
+        self.send(text_data=json.dumps({"type": "streams", "message": message}))

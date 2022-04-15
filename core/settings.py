@@ -141,9 +141,9 @@ CACHES = {
 }
 
 CELERY_BEAT_SCHEDULE = {
-    "current_date_task": {
-        "task": "streams.tasks.current_date",
-        "schedule": 10.0,
+    "streams": {
+        "task": "streams.tasks.get_streams",
+        "schedule": 30.0,
     }
 }
 
