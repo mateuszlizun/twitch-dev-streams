@@ -2,7 +2,15 @@
 {% load static %}
 {% block content %}
     <h1>Twitch Dev Streams</h1>
-    <div id="current_date">{{ current_date }}</div>
+    <div id="streams_list">
+        {% if streams %}
+            {% for stream in streams %}
+                <p>{{ stream.title }}</p>
+            {% endfor %}
+        {% else %}
+            <p>streams list not available</p>
+        {% endif %}
+    </div>
 
-    <script src="{% static 'streams/js/current_date_ws.js' %}"></script>
+    <script src="{% static 'streams/js/streams_ws.js' %}"></script>
 {% endblock content %}

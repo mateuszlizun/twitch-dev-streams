@@ -1,19 +1,27 @@
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
-from datetime import datetime
+from decouple import config
 from django.core.cache import cache
+import requests
 
 
 @shared_task
-def current_date():
-    currentDate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+def get_streams():
+    r_streams = requests.get(
+        "https://api.twitch.tv/helix/streams?game_id=1469308723",
+        headers={
+            "Authorization": "Bearer " + config("TWITCH_AUTH_TOKEN"),
+            "Client-Id": config("TWITCH_CLIENT_ID"),
+        },
+    )
+    streams = r_streams.json()["data"]
 
-    cache.set("current_date", currentDate, 30)
+    cache.set("streams", streams, 60)
 
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
-        "current_date_group", {"type": "date_message", "message": currentDate}
+        "streams_group", {"type": "streams_list", "message": streams}
     )
 
-    return currentDate
+    return streams
