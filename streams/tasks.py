@@ -5,6 +5,8 @@ from decouple import config
 from django.core.cache import cache
 import requests
 
+from .utils import set_stream_properties
+
 
 @shared_task
 def get_streams():
@@ -15,7 +17,8 @@ def get_streams():
             "Client-Id": config("TWITCH_CLIENT_ID"),
         },
     )
-    streams = r_streams.json()["data"]
+    streams_data = r_streams.json()["data"]
+    streams = [set_stream_properties(s) for s in streams_data]
 
     cache.set("streams", streams, 60)
 
