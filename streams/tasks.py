@@ -12,7 +12,7 @@ from .models import Tag
 @shared_task
 def get_streams():
     r_streams = requests.get(
-        "https://api.twitch.tv/helix/streams?game_id=1469308723",
+        "https://api.twitch.tv/helix/streams?game_id=1469308723&first=100",
         headers={
             "Authorization": "Bearer " + config("TWITCH_AUTH_TOKEN"),
             "Client-Id": config("TWITCH_CLIENT_ID"),
