@@ -6,6 +6,7 @@ from django.core.cache import cache
 import requests
 
 from .utils import set_stream_properties
+from .models import Tag
 
 
 @shared_task
@@ -19,6 +20,13 @@ def get_streams():
     )
     streams_data = r_streams.json()["data"]
     streams = [set_stream_properties(s) for s in streams_data]
+
+    tags = Tag.objects.all().order_by("-type", "name")
+
+    for stream in streams:
+        title = stream["title"].lower().replace(" ", "")
+        stream["tags_names"] = [tag.name for tag in tags if tag.code_name in title]
+        stream["tags_codes"] = [tag.code_name for tag in tags if tag.code_name in title]
 
     cache.set("streams", streams, 60)
 

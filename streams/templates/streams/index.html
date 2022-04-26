@@ -3,11 +3,25 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="my-5">
+            <div class="mt-4">
+                <div class="col-12 p-2">
+                    <span class="me-1">Filter by:</span>
+                    <button type="button" onClick={filterStreams("all")} class="btn btn-secondary btn-sm btn-tag my-1">All</button>
+                    {% for tag in tags %}
+                        <button type="button" onClick={filterStreams("{{ tag.code_name }}")}
+                            class="btn {% if tag.type == 'TP' %} btn-primary {% else %} btn-info {% endif %}  btn-sm btn-tag my-1">
+                            {{ tag.name }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="my-3">
                 <div class="d-flex flex-wrap" id="streams_list">
                     {% if streams %}
                         {% for stream in streams %}
-                            <div class="col-12 col-md-6 col-lg-4 p-2">
+                            <div class="col-12 col-md-6 col-lg-4 p-2 stream-container" data-tags="{{ stream.tags_codes }}">
                                 <div class="card">
                                     <a class="position-relative" href="{{ stream.url }}" target=”_blank”>
                                         <img src="{{ stream.thumbnail_url }}" class="card-img-top" alt="...">
@@ -19,7 +33,15 @@
                                     <div class="card-body">
                                         <h5 class="card-title text-truncate">{{ stream.title }}</h5>
                                         <p class="card-text text-truncate">{{ stream.user_name }}</p>
-                                        <span class="badge bg-secondary">tag</span>
+                                        {% if stream.tags_names %}
+                                            {% for tag in stream.tags_names %}
+                                                <span class="badge bg-secondary">{{ tag }}</span>
+                                            {% endfor %}
+                                        {% else %}
+                                            <span class="badge">
+                                                <span class="d-none">...</span>
+                                            </span>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -32,5 +54,5 @@
         </div>
     </div>
 
-    <script src="{% static 'streams/js/streams_ws.js' %}"></script>
+    <script src="{% static 'streams/js/streams.js' %}"></script>
 {% endblock content %}
